@@ -29,7 +29,7 @@
   
    IN ```auth_users.js```file 3 users are created : ```root``` ,```doctor``` and ```care_maker``` with access control for each user.
    
-   Issue this command line ```sudo docker-compose exec mongo bash``` to execute commands inside the ```mongo``` container then type : ```mongo < auth_users.js/docker-entrypoint-initdb.d```
+   Issue this command line ```sudo docker-compose exec mongo bash``` to execute commands inside the ```mongo``` container then type : ```mongo < docker-entrypoint-initdb.d/auth_users.js```
    
   To examine the access control of each user type inside mongo container : ```mongo -u <username> -p <password> --authenticationDatabase <database>```
   
