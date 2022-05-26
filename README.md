@@ -1,4 +1,4 @@
-# Mongodb kafka
+# Mongodb kafka demo
 
 
 ## Requirements:
@@ -23,7 +23,7 @@
   
 ### 2. Run the python data generator application
    run ```pip install -r requirements.txt```in a new shell. Then 
-   run ```python3 auth_users.py``` to start generating fake data to mongodb collections in ```patient``` database and Kafka Topics.
+   run ```python3 kafka-mongodb.py``` to start generating fake data to mongodb collections in ```patient``` database and Kafka Topics.
 
 ### 3. Access Control in Mongodb
   
