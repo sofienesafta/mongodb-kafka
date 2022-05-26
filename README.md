@@ -12,7 +12,7 @@
  
  ### 1. Download/Clone the docker files from the GitHub repository
  
- #### [Github repo](https://github.com/sofienesafta/mongodb-kafka/tree/feature-review "gh")
+ #### [Github repo](https://github.com/sofienesafta/mongodb-kafka/tree/feature-review )
  
  To run the demo issue ```sh run.sh``` which will:
 
@@ -22,14 +22,14 @@
   * Create a kafka consumer to read data from kafka Topic
   
 ### 2. Run the python data generator application
-
-   run python3 a```uth_users.py``` in a new shell to start generating fake data to mongodb collections in ```patient``` database.
+   run ```pip install -r requirements.txt```in a new shell. Then 
+   run ```python3 auth_users.py``` to start generating fake data to mongodb collections in ```patient``` database and Kafka Topics.
 
 ### 3. Access Control in Mongodb
   
-   IN ```auth_users.js``` file 3 users are created : ```root``` ,```doctor``` and ```care_maker``` with access contrl for eachone.
+   IN ```auth_users.js```file 3 users are created : ```root``` ,```doctor``` and ```care_maker``` with access control for each user.
    
-   Issue this command line in sudo ```docker-compose exec mongo bash``` to execute commands inside the ```mongo``` container then type : ```mongo < auth_users.js/docker-entrypoint-initdb.d```
+   Issue this command line ```sudo docker-compose exec mongo bash``` to execute commands inside the ```mongo``` container then type : ```mongo < auth_users.js/docker-entrypoint-initdb.d```
    
   To examine the access control of each user type inside mongo container : ```mongo -u <username> -p <password> --authenticationDatabase <database>```
   
