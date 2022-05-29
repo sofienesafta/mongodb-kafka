@@ -20,7 +20,7 @@
   * Wait for MongoDB, Kafka, Kafka Connect to be ready
   * Register the Confluent Mongodb sink Connector
   * Create a kafka consumer to read data from kafka Topic
-  
+examine the topics in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
 ### 2. Run the python data generator application
    run ```pip install -r requirements.txt```in a new shell. Then 
    run ```python3 kafka-mongodb.py``` to start generating fake data to mongodb collections in ```patient``` database and Kafka Topics.
