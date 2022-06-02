@@ -1,13 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[16]:
-
-
-
-
-# In[1]:
-
 
 from kafka import KafkaProducer
 from json import loads 
@@ -22,21 +12,14 @@ from pymongo import MongoClient
 from pprint import pprint
 
 
-# In[2]:
-
 
 #login to mongod with root user
 myclient = MongoClient('mongodb://%s:%s@127.0.0.1/admin' % ('root', 'root'))
 
 
-# In[22]:
-
-
 # list all databases
 myclient.list_database_names()
 
-
-# In[23]:
 
 
 Patientdb = myclient['patient']
@@ -44,8 +27,6 @@ sensorlogs_col = Patientdb["sensorlogs"]
 profile_col = Patientdb["profile"]
 medical_action_col = Patientdb["medical_action"]
 
-
-# In[5]:
 
 
 fake=Faker()
@@ -67,9 +48,6 @@ def get_registered_patient(seed=None):
       },(patient,date)) 
 
 
-# In[6]:
-
-
 def generate_profiles ():
     patient_list=[]
     patient_with_date=[]
@@ -83,14 +61,7 @@ def generate_profiles ():
     return (patient_list, dict(patient_with_date) , patient_Id)
 
 
-# In[7]:
-
-
 Patients,patient_with_date,patient_Id = generate_profiles()
-
-
-# In[8]:
-
 
 
 def generate_medical_action(seed=None):
@@ -108,9 +79,6 @@ def generate_medical_action(seed=None):
     }
 
 
-# In[24]:
-
-
 def create_fake_mongo_collections():
 
     adoc = profile_col.insert_many(Patients)
@@ -119,8 +87,6 @@ def create_fake_mongo_collections():
     
 create_fake_mongo_collections ()
 
-
-# In[20]:
 
 
 def generate_sensors_data():
@@ -143,15 +109,10 @@ def generate_sensors_data():
     return final_message
 
 
-# In[11]:
-
 
 #create kafka producer
 producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-
-
-# In[21]:
 
 
 # send 10 events to either normal_data topic or urgent_data topic every 2 seconds
@@ -171,8 +132,6 @@ for i in range(10):
     
 producer.flush()
 
-
-# In[ ]:
 
 
 

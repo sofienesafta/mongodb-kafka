@@ -5,8 +5,8 @@
   
    * Ubuntu 18.4
    * Docker 18.9+
-   * Docker compsoe 1.24+
-   * Anaconda 2.1.1+
+   * Docker compose 1.24+
+   * Python3
 
 ## Running the demo
  
