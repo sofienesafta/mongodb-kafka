@@ -1,3 +1,2 @@
-faker
 pymongo
 kafka-python

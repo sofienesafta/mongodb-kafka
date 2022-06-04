@@ -74,13 +74,13 @@ services:
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
- 
-  control-center:
+   
+  control-center: # API to examine kafka topics
     image: confluentinc/cp-enterprise-control-center:7.1.1
     hostname: control-center
     container_name: control-center
     depends_on:
-      - kafka
+      - kafka 
       - connect
       - zookeeper
     ports:
