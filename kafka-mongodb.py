@@ -10,15 +10,17 @@ from pymongo import MongoClient
 
 def patient_profiles():
     r=requests.get("https://raw.githubusercontent.com/animesh1012/machineLearning/main/Heart%20Failure%20Prediction/heart.csv")
-    lines = r.text.split('\n')[1:]
-    lines_splitted=[line.split(',') for line in lines]
+    lines = r.text.split('\n')[1:11]
     header=["Age","Sex","ChestPainType","RestingBP","Cholesterol","FastingBS","RestingECG"
         ,"MaxHR","ExerciseAngina","Oldpeak","ST_Slope","HeartDisease"]
-    profiles =[dict(zip(header,line)) for line in lines_splitted][:10]
+    profiles=[dict(zip(header,line.split(','))) for line in lines]
     list_range=range(1200,1210)
     for i, profile in enumerate(profiles) :
         profile["patient"]= list_range[i]
+        
     return profiles
+
+
  
 def generate_random_date():
     start_date = datetime.date(2021, 12, 1)
