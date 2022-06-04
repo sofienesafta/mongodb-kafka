@@ -1,92 +1,65 @@
 
 from kafka import KafkaProducer
 from json import loads 
-import json
+import requests
 import random
-import string
 import datetime
 from time import sleep
-from faker import Faker
-import pymongo
 from pymongo import MongoClient 
-from pprint import pprint
 
 
+def patient_profiles():
+    r=requests.get("https://raw.githubusercontent.com/animesh1012/machineLearning/main/Heart%20Failure%20Prediction/heart.csv")
+    lines = r.text.split('\n')[1:]
+    lines_splitted=[line.split(',') for line in lines]
+    header=["Age","Sex","ChestPainType","RestingBP","Cholesterol","FastingBS","RestingECG"
+        ,"MaxHR","ExerciseAngina","Oldpeak","ST_Slope","HeartDisease"]
+    profiles =[dict(zip(header,line)) for line in lines_splitted][:10]
+    list_range=range(1200,1210)
+    for i, profile in enumerate(profiles) :
+        profile["patient"]= list_range[i]
+    return profiles
+ 
+def generate_random_date():
+    start_date = datetime.date(2021, 12, 1)
+    end_date = datetime.date(2022, 5, 30)
+    time_between_dates = end_date - start_date
+    days_between_dates = time_between_dates.days
+    random_number_of_days = random.randrange(days_between_dates)
+    random_date = start_date + datetime.timedelta(days=random_number_of_days)
+    return str(random_date)
 
-#login to mongod with root user
+def generate_medical_action(seed=None):
+    random.seed(seed)
+    
+    patient = random.choice(range(1200,1210))
+    return {
+        "doctor/care_maker": random.choice([100,102,104,98]),
+        "Patient": patient,
+        "Date_of_action": generate_random_date(),
+        "Time": random.choice(["12.22","22.54","23.15","00.20","9.25","6.00","8.30","19.05","14.00","17.10"]),
+        "Action_ID": random.choice([4,12,5,18,28,15])
+    }
+#login to mongodb with root user
 myclient = MongoClient('mongodb://%s:%s@127.0.0.1/admin' % ('root', 'root'))
 
-
-# list all databases
-myclient.list_database_names()
-
-
-
+#create patient database and collections
 Patientdb = myclient['patient']
 sensorlogs_col = Patientdb["sensorlogs"]
 profile_col = Patientdb["profile"]
 medical_action_col = Patientdb["medical_action"]
 
 
+# list all databases
+myclient.list_database_names()
 
-fake=Faker()
-
-def get_registered_patient(seed=None):
-    random.seed(seed)
-    fake.seed_instance(seed)
-    gender =random.choice(["Homme","Femme"])
-    date = fake.date_between(start_date='-8M', end_date='now')
-    patient = fake.unique.random_int()
-    return ({
-        "name": fake.name_male() if gender =="Homme" else fake.name_female(),
-        "Gender": gender,
-        "Adresse": fake.address(),
-        "date_of_hospitalization": str(date),
-        "date_of_birth":str(fake.date_of_birth()),
-        "Patient": patient,
-        "Job": fake.job(),
-      },(patient,date)) 
-
-
-def generate_profiles ():
-    patient_list=[]
-    patient_with_date=[]
-    for i in range(10):
-        patient =get_registered_patient()
-        patient_list.append(patient[0])
-        patient_with_date.append(patient[1])
-        
-    patient_Id = [doc['Patient'] for doc in patient_list]
-
-    return (patient_list, dict(patient_with_date) , patient_Id)
-
-
-Patients,patient_with_date,patient_Id = generate_profiles()
-
-
-def generate_medical_action(seed=None):
-    random.seed(seed)
-    fake.seed_instance(seed)
-    
-    patient = random.choice(patient_Id)
-    return {
-        "doctor/care_maker": fake.random_int(),
-        "Patient": patient,
-    "Date_of_action": str(fake.date_between(start_date=patient_with_date[patient], 
-                        end_date='now')),
-        "Time": fake.time(),
-        "Action_ID": random.choice([4,12,5,18,28,15])
-    }
-
-
-def create_fake_mongo_collections():
-
-    adoc = profile_col.insert_many(Patients)
+def create_mongo_collections():
+    profiles= patient_profiles():
+    adoc = profile_col.insert_many(Profiles)
     actions_doc = [generate_medical_action()  for i in range(10)]
     adoc = medical_action_col.insert_many(actions_doc)
-    
-create_fake_mongo_collections ()
 
+create_mongo_collections()
 
 
 def generate_sensors_data():
@@ -97,7 +70,7 @@ def generate_sensors_data():
                            ]+ random.choice([['General data','Temperature',random.choice([40,36,35,33,41,42])],
                  ['Heart data','heart Rate',random.choice([60,63,55,58,52])] ,
                         ['Heart data','Oxygene level',random.choice(['60%','65%','55%','50%'])]])+
-                         [random.choice(patient_Id)],
+                         [random.choice(range(1200,1210))],
                              [str(date.time())[:5],str(date.date()),'PC-2','Normal','Medical data','Address','QFM',
       
                     random.choice(patient_Id) ]],weights=(90,10))
@@ -106,16 +79,14 @@ def generate_sensors_data():
     
     final_message = dict(zip(header,message[-1]))
     
-    return final_message
-
-
+    return final_message 
 
 #create kafka producer
 producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
 
-# send 10 events to either normal_data topic or urgent_data topic every 2 seconds
+# send 10 events to either normal data or urgent_data every 2 seconds
 for i in range(10):
     
     message = generate_sensors_data()
@@ -128,10 +99,11 @@ for i in range(10):
     producer.send(topic_name, message)
     
     sleep(2)
-    
-    
+        
 producer.flush()
 
+
+# In[ ]:
 
 
 

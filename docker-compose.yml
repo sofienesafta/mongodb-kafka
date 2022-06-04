@@ -36,18 +36,7 @@ services:
       KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONFLUENT_METRICS_ENABLE: 'true'
 
-  schema-registry:
-    image: confluentinc/cp-schema-registry:7.1.1
-    hostname: schema-registry
-    container_name: schema-registry
-    depends_on:
-      - kafka
-    ports:
-      - "8081:8081"
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:29092'
-      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
 
   connect:
     image: confluentinc/cp-server-connect:7.1.1
@@ -58,7 +47,6 @@ services:
     container_name: connect
     depends_on:
       - kafka
-      - schema-registry
       - zookeeper
     ports:
       - "8083:8083"
@@ -93,7 +81,6 @@ services:
     container_name: control-center
     depends_on:
       - kafka
-      - schema-registry
       - connect
       - zookeeper
     ports:
@@ -109,20 +96,6 @@ services:
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
-  rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.1.1
-    depends_on:
-      - kafka
-      - schema-registry
-    ports:
-      - 8082:8082
-    hostname: rest-proxy
-    container_name: rest-proxy
-    environment:
-      KAFKA_REST_HOST_NAME: rest-proxy
-      KAFKA_REST_BOOTSTRAP_SERVERS: 'kafka:29092'
-      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
-      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
   
   mongo:
     image: mongo:5.0.7      
