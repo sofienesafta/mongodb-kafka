@@ -73,7 +73,7 @@ def generate_sensors_data():
                          [random.choice(range(1200,1210))],
                              [str(date.time())[:5],str(date.date()),'PC-2','Normal','Medical data','Address','QFM',
       
-                    random.choice(range(1200,1210)]],weights=(90,10))
+                    random.choice(range(1200,1210))]],weights=(90,10))
     
     header = ['Time','Date','Id sensor','Category','Attribute','Data type','Value','Patient']
     
