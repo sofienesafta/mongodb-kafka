@@ -1,6 +1,6 @@
 
 from kafka import KafkaProducer
-from json import loads 
+import json
 import requests
 import random
 import datetime
