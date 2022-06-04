@@ -55,7 +55,7 @@ myclient.list_database_names()
 
 def create_mongo_collections():
     profiles= patient_profiles():
-    adoc = profile_col.insert_many(Profiles)
+    adoc = profile_col.insert_many(profiles)
     actions_doc = [generate_medical_action()  for i in range(10)]
     adoc = medical_action_col.insert_many(actions_doc)
 
@@ -103,7 +103,6 @@ for i in range(10):
 producer.flush()
 
 
-# In[ ]:
 
 
 
