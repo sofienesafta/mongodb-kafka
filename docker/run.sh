@@ -4,7 +4,7 @@ sudo docker-compose up -d --build
 
 echo "Waiting for the system t be ready"
 
-sleep 3.5m
+sleep 2.2m
 
 sudo docker cp auth_users.js mongo:docker-entrypoint-initdb.d
 
