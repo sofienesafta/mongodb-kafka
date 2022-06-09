@@ -99,7 +99,7 @@ services:
       PORT: 9021
   
   mongo:
-    image: mongo:5.0.7      
+    image: mongo:4.2.2      
     hostname: mongo
     container_name: mongo
     ports:
