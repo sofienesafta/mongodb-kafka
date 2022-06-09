@@ -41,7 +41,7 @@ services:
 
 
   connect:
-    image: confluentinc/cp-kafka-connect
+    image: confluentinc/cp-kafka-connect-base
     build:
       context: .
       dockerfile: Dockerfile
