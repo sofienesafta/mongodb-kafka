@@ -35,8 +35,6 @@ services:
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
       KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-
-
       CONFLUENT_METRICS_ENABLE: 'true'
 
 
