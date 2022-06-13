@@ -14,7 +14,7 @@
  
  #### [Github repo](https://github.com/sofienesafta/mongodb-kafka/tree/feature-review )
  
- To run the demo issue ```sh run.sh``` which will:
+ To run the demo issue ```sh run.sh```in docker folder which will:
 
   * Run ```docker-compose up```
   * Wait for MongoDB, Kafka, Kafka Connect to be ready
