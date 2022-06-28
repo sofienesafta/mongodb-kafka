@@ -100,12 +100,12 @@ create_mongo_collections(15)
 
 def df_init_version():
     df= pd.read_csv("heart.csv")
-    return df.iloc[:15,:]
+    return df
    
 
-def patient_with_label(nb_patient):
+def patient_with_label():
     r=requests.get("https://raw.githubusercontent.com/rashida048/Datasets/master/Heart.csv")
-    lines = r.text.split()[:nb_patient+1]
+    lines = r.text.split()
     header = lines[0].split(',')
     df=pd.DataFrame(lines,columns=['line'])
     df= df['line'].str.split(',',expand=True)
@@ -128,7 +128,7 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
     
-
+    df=df.iloc[nb_patient:,:]
     docs = df.to_dict(orient='records')
 
 	#send nb_patient events to either normal data or urgent_data every n seconds
