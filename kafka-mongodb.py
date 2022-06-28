@@ -128,7 +128,7 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
     
-    df=df.iloc[nb_patient:,:]
+    df=df.iloc[:nb_patient,:]
     docs = df.to_dict(orient='records')
 
 	#send nb_patient events to either normal data or urgent_data every n seconds
