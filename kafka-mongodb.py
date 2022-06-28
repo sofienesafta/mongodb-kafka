@@ -119,7 +119,7 @@ def patient_with_label(nb_patient):
     df['patient']=df['patient'].astype('int')
     df['Oldpeak']=df['Oldpeak'].astype('float')
     loaded_model = joblib.load("./model.joblib")
-    df['HR'] = loaded_model.predict(df.drop('patient',axis=1))
+    df['target'] = loaded_model.predict(df.drop('patient',axis=1))
     return df
 
 def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
@@ -134,7 +134,7 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
 	#send nb_patient events to either normal data or urgent_data every n seconds
     for doc in docs :
 
-        if doc['HR']==1:
+        if doc['target']==1:
                 topic_name = "urgent_data"
         else:
 
