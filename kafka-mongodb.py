@@ -98,7 +98,10 @@ def create_mongo_collections(nb_patient=10):
 
 create_mongo_collections(15)
 
-
+def df_init_version():
+    df= pd.read_csv("heart.csv")
+    return df.iloc[:15,:]
+   
 
 def patient_with_label(nb_patient):
     r=requests.get("https://raw.githubusercontent.com/rashida048/Datasets/master/Heart.csv")
@@ -119,13 +122,12 @@ def patient_with_label(nb_patient):
     df['HR'] = loaded_model.predict(df.drop('patient',axis=1))
     return df
 
-def data_to_kafka(nb_patient=10,n=2):
+def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
 
 	#create kafka producer
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-
-    df=patient_with_label(nb_patient)
+    
 
     docs = df.to_dict(orient='records')
 
