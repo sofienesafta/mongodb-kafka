@@ -35,7 +35,11 @@
   To examine the access control of each user type inside mongo container : ```mongo -u <username> -p <password> --authenticationDatabase <database>```
   
   The password fo each user is his username. ***exp***: ```mongo -u doctor -p doctor --authenticationDatabase patient```  allows to login as the doctor user.
-It is useful ton install mongodb compass better visualization of database and collections and the access control of subscribers.
-To install Mongodb Compass follow [install mongodb compass](https://www.mongodb.com/docs/compass/current/install/)
-To connect to mongo follow [these steps](https://www.mongodb.com/docs/compass/current/connect/authentication-connection/)
+  
+It is useful ton install mongodb compass for better visualization of databases , collections and the access control of subscribers.
+
+To install Mongodb Compass follow this [install mongodb compass](https://www.mongodb.com/docs/compass/current/install/)
+
+To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/current/connect/authentication-connection/)
+
 ***NB***: To connect with doctor or care_maker users specify the authentication database as ```patient```
