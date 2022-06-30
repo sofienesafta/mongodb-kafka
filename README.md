@@ -50,7 +50,7 @@ To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/
 Examine the topics, connectors installed, consumers in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
 
 
-To examine your MnogoSinkConnector go to the ```Connect``` button on the left. It shows the status of your connector. If it is running then the the transfer of messages to mongodb database has succefully done.
+To examine your MnogoSinkConnector go to the ```Connect``` button on the left, then on ```connect-default```. It shows the status of your connectors. If it is running then the transfer of messages to mongodb database has been succefully done.
 <img src="images/state_connector.png">
 
 You can click also on the name of the connector (```mongo```), then click on ```Settings``` to make changes on your Connector settings
