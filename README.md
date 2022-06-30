@@ -53,6 +53,8 @@ Examine the topics, connectors installed, consumers in the Kafka control center 
 To examine your MnogoSinkConnector go to the ```Connect``` button on the left, then on ```connect-default```. It shows the status of your connectors. If it is running then the transfer of messages to mongodb database has been succefully done.
 <img src="images/state_connector.png">
 
+If the connector is not running (degraded) issue ```sudo docker logs connect``` to get some details about the reason of the connector failre.
+
 You can click also on the name of the connector (```mongo```), then click on ```Settings``` to make changes on your Connector settings
 
 To examine the consumer consumption of topics messages, click on ```Consumers``` button on the left.Then click on the group_ID of the connector-cosumer.Exp : ```connect-mongo``` in the figure bellow.
