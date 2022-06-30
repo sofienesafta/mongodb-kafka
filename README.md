@@ -50,5 +50,5 @@ To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/
 examine the topics, connectors installed, consumers in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
 
 
-To examine your MnogoSinkConnector go to the ```connect``` on the left.
-<img src="images/state_connector.jpeg">
+To examine your MnogoSinkConnector go to the ```connect``` button in the box on the left.
+<img src="images/state_connector.png">
