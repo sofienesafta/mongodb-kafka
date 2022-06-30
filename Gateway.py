@@ -103,7 +103,7 @@ def df_init_version():
     return df
    
 
-def patient_with_label():
+def patient_classified_with_ML_model():
     r=requests.get("https://raw.githubusercontent.com/rashida048/Datasets/master/Heart.csv")
     lines = r.text.split()
     header = lines[0].split(',')
