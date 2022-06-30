@@ -21,7 +21,7 @@
   * Register the Confluent Mongodb sink Connector
   * Create a kafka consumer to read data from kafka Topic 
   
-  examine the topics in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
+  
 ### 2. Run the python data generator application
    run ```pip install -r requirements.txt```in a new shell. Then 
    run ```python3 kafka-mongodb.py``` to start generating fake data to mongodb collections in ```patient``` database and Kafka Topics.
@@ -43,3 +43,12 @@ To install Mongodb Compass follow this [install mongodb compass](https://www.mon
 To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/current/connect/authentication-connection/)
 
 ***NB***: To connect with doctor or care_maker users specify the authentication database as ```patient```
+
+
+### 4. Managing kafka components with Control center API:
+
+examine the topics, connectors installed, consumers in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
+
+
+To examine your MnogoSinkConnector go to the ```connect``` on the left.
+<img src="images/state_connector.jpeg">
