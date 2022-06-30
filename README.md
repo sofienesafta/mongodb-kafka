@@ -54,4 +54,4 @@ To examine your MnogoSinkConnector go to the ```Connect``` button in the box on 
 <img src="images/state_connector.png">
 
 To examine the consumer consumption of topics messages, click on ```Consumers``` button in the on the left.Then click on the group_ID of the connector-cosumer.Exp : connect-mongo in the figure bellow.
-<img src="images/consumer-groups.png">
+<img src="consumer-groups.png">
