@@ -28,7 +28,7 @@
 
 ### 3. Access Control in Mongodb
   
-   IN ```auth_users.js```file 3 users are created : ```root``` ,```doctor``` and ```care_maker``` with access control for each user.
+   IN ```auth_users.js```file 3 users are created with the fllowing usernames : ```root``` ,```doctor``` and ```care_maker``` with access control for each user.
    
    Issue this command line ```sudo docker-compose exec mongo bash``` to execute commands inside the ```mongo``` container then type : ```mongo < docker-entrypoint-initdb.d/auth_users.js```
    
