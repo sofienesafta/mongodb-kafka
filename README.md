@@ -24,7 +24,7 @@
   
 ### 2. Run the python data generator application
    run ```pip install -r requirements.txt```in a new shell. Then 
-   run ```python3 kafka-mongodb.py``` to start generating fake data to mongodb collections in ```patient``` database and Kafka Topics.
+   run ```python3 kafka-mongodb.py``` to start generating fake data to mongodb collections in ```patient``` database and read data from ```heart.csv``` and send them to Kafka Topics.
 
 ### 3. Access Control in Mongodb
   
@@ -47,13 +47,13 @@ To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/
 
 ### 4. Monitoring kafka components with Control center API:
 
-examine the topics, connectors installed, consumers in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
+Examine the topics, connectors installed, consumers in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
 
 
 To examine your MnogoSinkConnector go to the ```Connect``` button on the left. It shows the status of your connector. If it is running then the the transfer of messages to mongodb database has succefully done.
-<img src="state_connector.png">
+<img src="images/state_connector.png">
 
-To examine the consumer consumption of topics messages, click on ```Consumers``` button on the left.Then click on the group_ID of the connector-cosumer.Exp : connect-mongo in the figure bellow.
-<img src="consumer-groups.png">
+To examine the consumer consumption of topics messages, click on ```Consumers``` button on the left.Then click on the group_ID of the connector-cosumer.Exp : ```connect-mongo``` in the figure bellow.
+<img src="images/consumer-groups.png">
 
 You can as well examine your Kafka Topics. Just click on Topics on the left.
