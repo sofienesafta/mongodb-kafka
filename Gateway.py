@@ -134,7 +134,6 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
     docs = df.to_dict(orient='records')
 
 	
-    email_nurse = input("email\n")	
     for doc in docs :
         
         if doc['target']==1:
