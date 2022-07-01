@@ -42,7 +42,7 @@ To install Mongodb Compass follow this [install mongodb compass](https://www.mon
 
 To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/current/connect/authentication-connection/)
 
-***NB***: To connect with doctor or care_maker users specify the authentication database as ```patient```
+***NB***: Choose the ```Username/Password method```. To connect with doctor or care_maker users specify the authentication database as ```patient```
 
 
 ### 4. Monitoring kafka components with Control center API:
@@ -50,14 +50,14 @@ To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/
 Examine the topics, connectors installed, consumers in the Kafka control center [http://localhost:9021/](http://localhost:9021/)
 
 
-To examine your MnogoSinkConnector go to the ```Connect``` button on the left, then on ```connect-default```. It shows the status of your connectors. If it is running then the transfer of messages to mongodb database has been succefully done.
+To examine your MnogoSinkConnector go to the ```Connect``` button on the left, then click on ```connect-default```. It shows the status of your connectors. If it is running then the transfer of messages to mongodb database has been succefully done.
 <img src="images/state_connector.png">
 
 If the connector is not running (degraded) issue ```sudo docker logs connect``` to get some details about the reason of the connector failre.
 
 You can click also on the name of the connector (```mongo```), then click on ```Settings``` to make changes on your Connector settings
 
-To examine the consumer consumption of topics messages, click on ```Consumers``` button on the left.Then click on the group_ID of the connector-cosumer.Exp : ```connect-mongo``` in the figure bellow.
+To examine the Mongo Connector consumption of topics messages, click on ```Consumers``` button on the left.Then click on the group_ID of the connector-cosumer.Exp : ```connect-mongo``` in the figure bellow.
 <img src="images/consumer-groups.png">
 
 You can as well examine your Kafka Topics. Just click on Topics on the left.
