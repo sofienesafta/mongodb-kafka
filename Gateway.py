@@ -8,8 +8,7 @@ import pandas as pd
 from time import sleep
 import joblib
 from pymongo import MongoClient 
-from email.message import EmailMessage
-import smtplib
+
 
  
 def generate_random_date(y1,m1,d1,y2,m2,d2):
@@ -123,21 +122,9 @@ def patient_classified_with_ML_model():
     df['target'] = loaded_model.predict(df.drop('patient',axis=1))
     return df
 
-def email_alert(subject,body,to):
-    msg= EmailMessage()
-    msg.set_content(body)
-    msg['subject']= subject
-    msg['to'] = to
-    user = "sofiene.safta@horizon-tech.tn"
-    msg['from'] = user
-    password= "lbdpyemcsksjrsgk"
-    server = smtplib.SMTP("smtp.gmail.com",587)
-    server.starttls()
-    server.login(user, password)
-    server.send_message(msg)
-    server.quit()
+  
 
-def data_to_kafka(nb_patient=10,n=2,df=df_init_version(),email_nurse="sofiene.safta@horizon-tech.tn"):
+def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
 
 	#create kafka producer
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
@@ -151,10 +138,8 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version(),email_nurse="sofiene.sa
     for doc in docs :
         
         if doc['target']==1:
-		email_alert("Alert message","Emergency",email_nurse)  ## You put your email to test if you receive an email alert message. 
                 topic_name = "urgent_data"
         else:
-
 
                 topic_name= "normal_data"
 
@@ -165,7 +150,6 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version(),email_nurse="sofiene.sa
         sleep(n)
         
     producer.flush()
-    email_alert("PRGRAM GITHUB","tested","sofiene.safta@horizon-tech.tn") 
 	
 data_to_kafka(15)
 
