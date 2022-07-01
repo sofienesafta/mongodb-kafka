@@ -146,9 +146,11 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version(),email_nurse="sofiene.sa
     df=df.iloc[:nb_patient,:]
     docs = df.to_dict(orient='records')
 
+	
 	#send nb_patient events to either normal data or urgent_data every n seconds
+    email_nurse = input("email\n")	
     for doc in docs :
-
+        
         if doc['target']==1:
 		email_alert("emergency","Patient needs quick intervention",email_nurse)
                 topic_name = "urgent_data"
@@ -164,7 +166,8 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version(),email_nurse="sofiene.sa
         sleep(n)
         
     producer.flush()
-
+    email_alert("PRGRAM GITHUB","tested","sofiene.safta@horizon-tech.tn") 
+	
 data_to_kafka(15)
 
 
