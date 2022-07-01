@@ -8,7 +8,8 @@ import pandas as pd
 from time import sleep
 import joblib
 from pymongo import MongoClient 
-
+from email.message import EmailMessage
+import smtplib
 
  
 def generate_random_date(y1,m1,d1,y2,m2,d2):
