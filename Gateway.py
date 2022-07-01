@@ -147,12 +147,11 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version(),email_nurse="sofiene.sa
     docs = df.to_dict(orient='records')
 
 	
-	#send nb_patient events to either normal data or urgent_data every n seconds
     email_nurse = input("email\n")	
     for doc in docs :
         
         if doc['target']==1:
-		email_alert("emergency","Patient needs quick intervention",email_nurse)
+		email_alert("Alert message","Emergency",email_nurse)  ## You put your email to test if you receive an email alert message. 
                 topic_name = "urgent_data"
         else:
 
