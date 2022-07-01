@@ -122,7 +122,21 @@ def patient_classified_with_ML_model():
     df['target'] = loaded_model.predict(df.drop('patient',axis=1))
     return df
 
-def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
+def email_alert(subject,body,to):
+    msg= EmailMessage()
+    msg.set_content(body)
+    msg['subject']= subject
+    msg['to'] = to
+    user = "sofiene.safta@horizon-tech.tn"
+    msg['from'] = user
+    password= "lbdpyemcsksjrsgk"
+    server = smtplib.SMTP("smtp.gmail.com",587)
+    server.starttls()
+    server.login(user, password)
+    server.send_message(msg)
+    server.quit()
+
+def data_to_kafka(nb_patient=10,n=2,df=df_init_version(),email_nurse="sofiene.safta@horizon-tech.tn"):
 
 	#create kafka producer
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
@@ -135,6 +149,7 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
     for doc in docs :
 
         if doc['target']==1:
+		email_alert("emergency","Patient needs quick intervention",email_nurse)
                 topic_name = "urgent_data"
         else:
 
