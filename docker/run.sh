@@ -56,5 +56,5 @@ The local MongoDB server and Kafka broker is ready to receive data.
  '''
 
 
-echo "execute the alert_nurse python file"
+echo "A Kafka Consumer has been created for Alert Topic"
 python3 ../alert_nurse.py ## execute the alert_nurse python file
