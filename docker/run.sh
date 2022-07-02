@@ -59,3 +59,4 @@ echo "\nInstall kafkacat "
 sudo apt-get install kafkacat
 kafkacat -b localhost:9092 -t urgent_data -C 
 
+python3 ../alert_nurse.py ## execute the alert_nurse python file
