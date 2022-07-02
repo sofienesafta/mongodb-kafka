@@ -24,7 +24,7 @@
   
 ### 2. Run the python data generator application
    run ```pip install -r requirements.txt```in a new shell. Then 
-   run ```python3 kafka-mongodb.py``` to start generating fake data to mongodb collections in ```patient``` database and read data from ```heart.csv``` and send them to Kafka Topics.
+   run ```python3 Gateway.py``` to start generating fake data to mongodb collections in ```patient``` database and read data from ```heart.csv``` and send them to Kafka Topics.
 
 ### 3. Access Control in Mongodb
   
