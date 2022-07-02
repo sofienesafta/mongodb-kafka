@@ -26,5 +26,5 @@ consumer = KafkaConsumer('urgent_data',
 nurse_email = input("Email : " )
 for msg in consumer:
       
-    print("ALERT: Emergency")    l)   
+    print("ALERT: Emergency")    
     email_alert("ALERT","emergency" ,nurse_email)
