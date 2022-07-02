@@ -20,9 +20,9 @@ def email_alert(subject,body,to):
 # create the Kafka Consumer  
 consumer = KafkaConsumer('urgent_data',
          bootstrap_servers = ['localhost : 9092'], 
-         group_id = 'care_makers',  
-         value_deserializer = lambda x : loads(x.decode('utf-8'))  
-        ) 
+         group_id = 'care_makers'
+                        ) 
+
 nurse_email = input("Email : " )
 for msg in consumer:
       
