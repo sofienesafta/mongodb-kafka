@@ -9,7 +9,6 @@ from time import sleep
 import joblib
 from pymongo import MongoClient 
 
-
  
 def generate_random_date(y1,m1,d1,y2,m2,d2):
     start_date = datetime.date(y1, m1, d1)
