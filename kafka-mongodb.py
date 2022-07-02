@@ -8,7 +8,8 @@ import pandas as pd
 from time import sleep
 import joblib
 from pymongo import MongoClient 
-
+from email.message import EmailMessage
+import smtplib
 
  
 def generate_random_date(y1,m1,d1,y2,m2,d2):
@@ -96,7 +97,7 @@ def create_mongo_collections(nb_patient=10):
     actions_doc = [generate_medical_action(nb_patient)  for i in range(nb_patient)]
     adoc = medical_action_col.insert_many(actions_doc)
 
-create_mongo_collections(15)
+#create_mongo_collections(15)
 
 def df_init_version():
     df= pd.read_csv("heart.csv")
@@ -122,6 +123,20 @@ def patient_with_label():
     df['target'] = loaded_model.predict(df.drop('patient',axis=1))
     return df
 
+def email_alert(subject,body,to):
+    msg= EmailMessage()
+    msg.set_content(body)
+    msg['subject']= subject
+    msg['to'] = to
+    user = "sofiene.safta@horizon-tech.tn"
+    msg['from'] = user
+    password= "lbdpyemcsksjrsgk"
+    server = smtplib.SMTP("smtp.gmail.com",587)
+    server.starttls()
+    server.login(user, password)
+    server.send_message(msg)
+    server.quit()
+    
 def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
 
 	#create kafka producer
@@ -131,12 +146,15 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
     df=df.iloc[:nb_patient,:]
     docs = df.to_dict(orient='records')
 
-	#send nb_patient events to either normal data or urgent_data every n seconds
+
+    email_nurse = input("email\n") ## You put your email to test if you receive an email alert message. 
     for doc in docs :
 
         if doc['target']==1:
+        	
                 topic_name = "urgent_data"
-        else:
+                email_alert("Alert message","Emergency",email_nurse)         
+        else:   
 
 
                 topic_name= "normal_data"
@@ -146,7 +164,8 @@ def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
         producer.send(topic_name,doc)
     
         sleep(n)
-        
+
+    email_alert("program","tested","sofiene.safta@horizon-tech.tn")     
     producer.flush()
 
 data_to_kafka(15)
