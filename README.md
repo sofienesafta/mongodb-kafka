@@ -18,8 +18,9 @@
 
   * Run ```docker-compose up```
   * Wait for MongoDB, Kafka, Kafka Connect to be ready
-  * Register the Confluent Mongodb sink Connector
-  * Create a kafka consumer to read data from kafka Topic 
+  * Register the Confluent Mongodb sink Connectors
+  * Create 2 kafka Topics normal_data and urgent_data
+  * Create a kafka Consumer of nurse_group to send a real-time email message alert related to urgent_data topic.
   
   
 ### 2. Run the python data generator application
