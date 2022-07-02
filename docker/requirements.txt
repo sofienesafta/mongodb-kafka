@@ -1,3 +1,0 @@
-pymongo
-kafka-python
-pandas
