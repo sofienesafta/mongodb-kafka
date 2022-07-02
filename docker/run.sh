@@ -53,10 +53,6 @@ echo '''
 ==============================================================================================================
 The local MongoDB server and Kafka broker is ready to receive data.
 ==============================================================================================================
-You can confirm the kafka producer is working by reading messages from the Kafka Topic "urgent_data" '''
 
-echo "\nInstall kafkacat "
-sudo apt-get install kafkacat
-kafkacat -b localhost:9092 -t urgent_data -C 
-
+echo "execute the alert_nurse python file"
 python3 ../alert_nurse.py ## execute the alert_nurse python file
