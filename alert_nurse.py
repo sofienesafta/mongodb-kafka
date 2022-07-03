@@ -23,7 +23,7 @@ consumer = KafkaConsumer('urgent_data',
          group_id = 'care_makers'
                         ) 
 
-nurse_email = input("Email : " )
+nurse_email = input("Email : " )   ## The user gives a valid email to test Alert message.
 for msg in consumer:
       
     print("ALERT: Emergency")    
