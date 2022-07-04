@@ -101,26 +101,6 @@ def df_init_version():
     df= pd.read_csv("heart.csv")
     return df
    
-
-def patient_classified_with_ML_model():
-    r=requests.get("https://raw.githubusercontent.com/rashida048/Datasets/master/Heart.csv")
-    lines = r.text.split()
-    header = lines[0].split(',')
-    df=pd.DataFrame(lines,columns=['line'])
-    df= df['line'].str.split(',',expand=True)
-    df.columns=header
-    df.rename(columns={'':'patient'},inplace=True)
-    df= df.iloc[1:,:-1]  
-    df['ChestPain'] = df['ChestPain'].replace({"typical":3,"nontypical":1,"asymptomatic":0,"nonanginal":2})
-    df['Thal'] = df['Thal'].replace({"fixed":1,"normal":2,"reversable":3})
-    header.remove("Oldpeak")
-    df[header[1:-1]] =df[header[1:-1]].astype('int')
-    df['patient']=df['patient'].astype('int')
-    df['Oldpeak']=df['Oldpeak'].astype('float')
-    
-    df['target'] = loaded_model.predict(df.drop('patient',axis=1))
-    return df
-
   
 
 def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None):
@@ -134,16 +114,17 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None):
 	
     for _ , row in df.iterrows() :
 	
-	if ML_predict:
+	if ML_predict:   ## A condition to Use a classification Ml algorithm to predict the target .
 		
 		X= row.drop('target').to_frame().T
-           	type_record =  model.predict(X)
+           	type_record =  model.predict(X)    ## type_record is a variable that identify the label of each record read.
         else:
                 type_record= row['target']
         
         if type_record==1:
-                topic_name = "urgent_data"
-        else:
+		
+                topic_name = "urgent_data"  
+        else:                              ## The kafka Topic is specified based on the type_record value(1 or 0)
 
                 topic_name= "normal_data"
 		
@@ -151,15 +132,17 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None):
         doc= row.drop('target').to_dict()
         
         producer.send(topic_name,doc)
-    
+        print("this data is urgent !!!" if type_record==1 else "this data is normal")
         sleep(n)
         
     producer.flush()
 
-loaded_model = joblib.load("./model.joblib") ## You can use the ML model saved in this directory in case of the booleen parameter ML_predict is set True.
-                                                
-	
-data_to_kafka(nb_patient=15,ML_predict=False)
+
+
+## You can use the ML model saved in this directory in case of the booleen parameter ML_predict is set True.
+loaded_model = joblib.load("./model.joblib") 
+                                                	
+data_to_kafka(nb_patient=15,ML_predict=False) ## reading initial version of data already classified Exemple.
 
 
 
