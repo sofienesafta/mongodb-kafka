@@ -117,39 +117,49 @@ def patient_classified_with_ML_model():
     df[header[1:-1]] =df[header[1:-1]].astype('int')
     df['patient']=df['patient'].astype('int')
     df['Oldpeak']=df['Oldpeak'].astype('float')
-    loaded_model = joblib.load("./model.joblib")
+    
     df['target'] = loaded_model.predict(df.drop('patient',axis=1))
     return df
 
   
 
-def data_to_kafka(nb_patient=10,n=2,df=df_init_version()):
+def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None):
 
 	#create kafka producer
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-    
-    df=df.iloc[:nb_patient,:]
-    docs = df.to_dict(orient='records')
-
+  
+        	
+    df= df_init_version().iloc[:nb_patient,:]
 	
-    for doc in docs :
+    for _ , row in df.iterrows() :
+	
+	if ML_predict:
+		
+		X= row.drop('target').to_frame().T
+           	type_record =  model.predict(X)
+        else:
+                type_record= row['target']
         
-        if doc['target']==1:
+        if type_record==1:
                 topic_name = "urgent_data"
         else:
 
                 topic_name= "normal_data"
-
-    
+		
+	
+        doc= row.drop('target').to_dict()
         
         producer.send(topic_name,doc)
     
         sleep(n)
         
     producer.flush()
+
+loaded_model = joblib.load("./model.joblib") ## You can use the ML model saved in this directory in case of the booleen parameter ML_predict is set True.
+                                                
 	
-data_to_kafka(15)
+data_to_kafka(nb_patient=15,ML_predict=False)
 
 
 
