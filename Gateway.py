@@ -103,8 +103,8 @@ def df_init_version():
    
   
 
-def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If Ml_predict is set to False the current label of init dataset
-	                                                          ## will be taken in account rather then The ML classifier
+def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predict is set to False the current labels of initial dataset 'heart.csv'
+	                                                          ## will be taken in account rather then The ML classifier prediction.
 
 	#create kafka producer
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
