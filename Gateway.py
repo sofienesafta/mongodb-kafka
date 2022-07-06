@@ -114,12 +114,12 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
 	
     for _ , row in df.iterrows() :
 	
-	if ML_predict:   ## A condition to Use a classification Ml algorithm to predict the target .
+	    if ML_predict:   ## A condition to Use a classification Ml algorithm to predict the target .
 		
-		X= row.drop('target').to_frame().T
+		    X= row.drop('target').to_frame().T
            	type_record =  model.predict(X)    ## type_record is a variable that identify the label of each record read.
         else:
-                type_record= row['target']
+            type_record= row['target']
         
         if type_record==1:
 		
