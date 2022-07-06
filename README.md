@@ -41,7 +41,7 @@ It is useful ton install mongodb compass for better visualization of databases ,
 
 To install Mongodb Compass follow this [install mongodb compass](https://www.mongodb.com/docs/compass/current/install/)
 
-To connect to mongodb follow [these steps](https://www.mongodb.com/docs/compass/current/connect/authentication-connection/)
+To connect to mongodb via Compass follow [these steps](https://www.mongodb.com/docs/compass/current/connect/authentication-connection/)
 
 ***NB***: Choose the ```Username/Password method```. To connect with doctor or care_maker users specify the authentication database as ```patient```
 
