@@ -1,7 +1,6 @@
 
 from kafka import KafkaProducer
 import json
-import requests
 import random
 import datetime
 import pandas as pd
@@ -130,7 +129,9 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
                 topic_name= "normal_data"
 		
 	
-        doc= row.drop('target').to_dict()
+        doc= row.drop(['target','sex','age']).to_dict()
+        doc['date']=str(datetime.datetime.now().date())
+        doc['time']=str(datetime.datetime.now().time())[:5]
         
         producer.send(topic_name,doc)
         print("this data is urgent !!!" if type_record==1 else "this data is normal")
