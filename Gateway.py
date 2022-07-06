@@ -120,13 +120,13 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
 		type_record= X.loc[i,'target']
 	        X.drop('target',axis=1)
                                              ## type_record is a variable that identify the label of each record read.
-            else:
+        else:
             	type_record= model.predict(X)
         
-            if type_record==1:
+        if type_record==1:
 		
                 topic_name = "urgent_data"  
-            else:                              ## The kafka Topic is specified based on the type_record value(1 or 0)
+        else:                              ## The kafka Topic is specified based on the type_record value(1 or 0)
 
                 topic_name= "normal_data"
 		
