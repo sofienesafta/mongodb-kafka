@@ -116,7 +116,7 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
     for  i in data.index:
 	    X= data.iloc[[i],:]
 	
-	    if 'target' in X.columns:              
+	if 'target' in X.columns:              
 		type_record= X.loc[i,'target']
 	        X.drop('target',axis=1)
                                              ## type_record is a variable that identify the label of each record read.
