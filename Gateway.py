@@ -99,48 +99,47 @@ create_mongo_collections(15)
   
 
 def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predict is set to False the current labels of initial dataset 'heart.csv'
-	                                                          ## will be taken in account rather then The ML classifier prediction.
+                                                        ## will be taken in account rather then The ML classifier prediction.
 
-	#create kafka producer
+        #create kafka producer
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
   
     if ML_predict:    ## A condition to Use a classification Ml algorithm to predict the target .    	
-    	
-	data = pd.read_csv('sensors_data.csv').iloc[:nb_patient,:] ## sensors_data.csv is X_test obtained after splitting in X_test and X_train.                                                            
-	
+            
+        data = pd.read_csv('sensors_data.csv').iloc[:nb_patient,:] ## sensors_data.csv is X_test obtained after splitting in X_test and X_train.
+                                                                    
+        
     else:
-	data= pd.read_csv('heart.csv').iloc[:nb_patient,:]
-	
-
-    for  i in data.index:
-	    X= data.iloc[[i],:]
-	
-	if 'target' in X.columns:              
-		type_record= X.loc[i,'target']
-	        X.drop('target',axis=1)
-                                             ## type_record is a variable that identify the label of each record read.
+        data= pd.read_csv('heart.csv').iloc[:nb_patient,:]
+        
+    for  i in data.index :
+        X= data.iloc[[i],:]
+        
+        if 'target' in X.columns:              
+            type_record= X.loc[i,'target']
+            X= X.drop('target',axis=1)
+                                ## type_record is a variable that identify the label of each record read.
         else:
-            	type_record= model.predict(X)
+                type_record= model.predict(X)
         
         if type_record==1:
-		
+            
                 topic_name = "urgent_data"  
         else:                              ## The kafka Topic is specified based on the type_record value(1 or 0)
 
                 topic_name= "normal_data"
-		
-	
+            
+        
         doc= X.drop(['sex','age'],axis=1).to_dict('records')[0]
         doc['date']=str(datetime.datetime.now().date())
         doc['time']=str(datetime.datetime.now().time())[:5]
         doc['Patient_ID'] = i+1
         producer.send(topic_name,doc)
         print("this data is urgent !!!" if type_record==1 else "this data is normal")
+        print(doc)
         sleep(n)
-        
     producer.flush()
-
 
 
 ## You can use the ML model saved in this directory in case of the booleen parameter ML_predict is set True.
