@@ -146,7 +146,7 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
 ## You can use the ML model saved in this directory in case of the booleen parameter ML_predict is set True.
 model = joblib.load("./model.joblib") 
                                                 	
-data_to_kafka(nb_patient=15,ML_predict=False) ## reading initial version of data already classified Exemple.
+data_to_kafka(nb_patient=15,ML_predict=False) ## reading initial version of data already classified .
 
 
 
