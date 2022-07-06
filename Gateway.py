@@ -96,10 +96,6 @@ def create_mongo_collections(nb_patient=10):
 
 create_mongo_collections(15)
 
-def df_init_version():
-    df= pd.read_csv("heart.csv")
-    return df
-   
   
 
 def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predict is set to False the current labels of initial dataset 'heart.csv'
@@ -109,17 +105,32 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
     producer = KafkaProducer(bootstrap_servers= 'localhost:9092',
                        value_serializer=lambda v: json.dumps(v).encode('utf-8'))
   
-        	
-    df= df_init_version().iloc[:nb_patient,:]
+    if ML_predict:    ## A condition to Use a classification Ml algorithm to predict the target .    	
+    	
+	data = pd.read_csv('sensors_data.csv').iloc[:nb_patient,:] ## sensors_data.csv is X_test obtained after splitting in X_test and X_train.
+	                                                            
 	
-    for _ , row in df.iterrows() :
+    else:
+	data= pd.read_csv('heart.csv').iloc[:nb_patient,:]
 	
+<<<<<<< HEAD
 	    if ML_predict:   ## A condition to Use a classification Ml algorithm to predict the target .
 		
 		    X= row.drop('target').to_frame().T
            	type_record =  model.predict(X)    ## type_record is a variable that identify the label of each record read.
         else:
             type_record= row['target']
+=======
+    for  i in data.index:
+	X= data.iloc[[i],:]
+	
+	if 'target' in X.columns:              
+		type_record= X.loc[i,'target']
+	        X.drop('target',axis=1)
+                                             ## type_record is a variable that identify the label of each record read.
+        else:
+                type_record= model.predict(X)
+>>>>>>> af393be496adadbcc0f59d3559ec6eaabdbe9d4d
         
         if type_record==1:
 		
@@ -129,10 +140,10 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
                 topic_name= "normal_data"
 		
 	
-        doc= row.drop(['target','sex','age']).to_dict()
+        doc= X.drop(['sex','age'],axis=1).to_dict('records')[0]
         doc['date']=str(datetime.datetime.now().date())
         doc['time']=str(datetime.datetime.now().time())[:5]
-        
+        doc['Patient_ID'] = i+1
         producer.send(topic_name,doc)
         print("this data is urgent !!!" if type_record==1 else "this data is normal")
         sleep(n)
