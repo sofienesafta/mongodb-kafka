@@ -113,14 +113,14 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
     else:
 	data= pd.read_csv('heart.csv').iloc[:nb_patient,:]
 	
-<<<<<<< HEAD
+
 	    if ML_predict:   ## A condition to Use a classification Ml algorithm to predict the target .
 		
-		    X= row.drop('target').to_frame().T
+		    
            	type_record =  model.predict(X)    ## type_record is a variable that identify the label of each record read.
         else:
             type_record= row['target']
-=======
+
     for  i in data.index:
 	X= data.iloc[[i],:]
 	
@@ -130,7 +130,6 @@ def data_to_kafka(nb_patient=10,n=2,ML_predict=False,model=None): ##If ML_predic
                                              ## type_record is a variable that identify the label of each record read.
         else:
                 type_record= model.predict(X)
->>>>>>> af393be496adadbcc0f59d3559ec6eaabdbe9d4d
         
         if type_record==1:
 		
