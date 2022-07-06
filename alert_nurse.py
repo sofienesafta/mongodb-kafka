@@ -25,6 +25,5 @@ consumer = KafkaConsumer('urgent_data',
 
 nurse_email = input("Email : " )   ## The user gives a valid email to test Alert message.
 for msg in consumer:
-      
     print("ALERT Emergency")    
     email_alert("ALERT emergency","A patient need urgent intervention" ,nurse_email)
