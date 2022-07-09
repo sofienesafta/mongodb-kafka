@@ -21,9 +21,10 @@ consumer = KafkaConsumer('urgent_data',
          group_id = 'Alert_staff'
                         ) 
 
-staff_email = input("to : " )   ## The user gives a valid email to test Alert message.
+staff_email = input("to : " )   ## The user gives a valid email to test Alert email message.
 user_address= input(" user : ")
-passw= input("password : " ) ## The user has to contact me
+passw= input("password : " ) ##   The password given is not the one you put to login to your gmail accunt.It
+                            ##  is an application password provided by google.
 for msg in consumer:
     print("ALERT Emergency")    
     email_alert("ALERT emergency","A patient need urgent intervention" ,staff_email,user_address,passw)
