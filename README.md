@@ -62,3 +62,9 @@ To examine the Mongo Connector consumption of topics messages, click on ```Consu
 <img src="images/consumer-groups.png">
 
 You can as well examine your Kafka Topics. Just click on Topics on the left.
+
+#### Requirements to run alert_nurse.py
+
+executing ```alert_nurse.py``` allow to send automatic email message. The program  ask you to give your email address and your password.
+
+The user can choose his gmail address. But for the password he shoud follow this tutorial: [Sign in with App Passwords](https://support.google.com/accounts/answer/185833?hl=en) 
