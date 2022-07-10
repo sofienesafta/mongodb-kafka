@@ -1,4 +1,7 @@
-# Mongodb kafka demo
+# E-health system architecture
+
+<img src="images/archit.png">
+
 
 
 ## Requirements:
